@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>VinylID</title>
 <meta name="theme-color" content="#111008"/>
-<link rel="manifest" href="manifest.json"/>
+<link rel="manifest" href="/VinylDB/manifest.json"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -17,21 +17,14 @@
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Inconsolata',monospace;font-size:14px}
 body{display:flex;flex-direction:column;min-height:100vh}
-
-/* HEADER */
-header{padding:1rem 1.2rem 0.8rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--groove);position:sticky;top:0;z-index:100}
-.logo{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--gold);letter-spacing:-0.03em}
-.logo sup{font-size:0.5rem;font-weight:400;color:var(--muted);letter-spacing:0.05em;vertical-align:super;margin-left:2px}
-.btn-icon{background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);padding:0.3rem 0.55rem;font-size:0.8rem;cursor:pointer;font-family:inherit;transition:all .15s}
+header{padding:1rem 1.2rem .8rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--groove);position:sticky;top:0;z-index:100}
+.logo{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--gold);letter-spacing:-.03em}
+.logo sup{font-size:.5rem;font-weight:400;color:var(--muted);letter-spacing:.05em;vertical-align:super;margin-left:2px}
+.btn-icon{background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);padding:.3rem .55rem;font-size:.8rem;cursor:pointer;font-family:inherit;transition:all .15s}
 .btn-icon:hover{border-color:var(--gold);color:var(--gold)}
-
-/* MAIN */
 main{flex:1;overflow-y:auto;padding-bottom:4rem}
-
-/* STATES */
 .state{display:none;padding:2.5rem 1.4rem;text-align:center}
 .state.active{display:block}
-
 .idle-ring{width:110px;height:110px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;position:relative}
 .idle-ring::before{content:'';position:absolute;inset:14px;border-radius:50%;border:1px solid var(--border)}
 .idle-ring::after{content:'';position:absolute;inset:30px;border-radius:50%;background:var(--surface)}
@@ -41,17 +34,21 @@ main{flex:1;overflow-y:auto;padding-bottom:4rem}
 .idle-steps{display:flex;flex-direction:column;gap:.45rem;margin:1.4rem auto 0;max-width:260px;text-align:left}
 .idle-step{display:flex;align-items:center;gap:.7rem;color:var(--muted);font-size:.73rem}
 .step-num{width:20px;height:20px;border-radius:50%;border:1px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--gold);flex-shrink:0}
-
 .load-track{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.25rem}
 .load-artist{color:var(--gold);font-size:.82rem;margin-bottom:1.4rem}
 .spinner{width:38px;height:38px;border-radius:50%;margin:0 auto;border:2px solid var(--border);border-top-color:var(--gold);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .load-step{color:var(--muted);font-size:.72rem;margin-top:1rem}
-
 .error-msg{color:var(--red);font-size:.82rem;line-height:1.7;margin-bottom:1rem}
 .btn-link{color:var(--gold);background:none;border:none;font-family:inherit;font-size:.78rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 
-/* MASTER INFO */
+/* MASTER CHOOSER */
+.master-choices{display:flex;flex-direction:column;gap:.5rem;margin-top:1rem;text-align:left}
+.master-choice{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:.7rem .9rem;cursor:pointer;transition:border-color .15s}
+.master-choice:hover{border-color:var(--gold)}
+.mc-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--white);display:block;margin-bottom:.2rem}
+.mc-meta{font-size:.68rem;color:var(--muted)}
+
 #master-info{padding:1rem 1.2rem .8rem;border-bottom:1px solid var(--border);background:var(--surface);display:none}
 #master-info.visible{display:flex;gap:.9rem;align-items:flex-start}
 .master-thumb{width:62px;height:62px;border-radius:3px;object-fit:cover;flex-shrink:0;border:1px solid var(--border);background:var(--groove)}
@@ -60,8 +57,6 @@ main{flex:1;overflow-y:auto;padding-bottom:4rem}
 .master-artist{color:var(--gold);font-size:.78rem;margin-bottom:.4rem}
 .master-tags{display:flex;gap:.35rem;flex-wrap:wrap}
 .tag{background:var(--surface2);border:1px solid var(--border);border-radius:2px;padding:.1rem .38rem;font-size:.62rem;color:var(--muted)}
-
-/* BUNDLE BAR */
 #bundle-bar{display:none;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);background:var(--groove)}
 #bundle-bar.visible{display:block}
 .bundle-title{font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem}
@@ -73,12 +68,8 @@ main{flex:1;overflow-y:auto;padding-bottom:4rem}
 .chip-name{color:var(--white);display:block;font-weight:500}
 .chip-count{color:var(--gold);font-size:.62rem}
 .chip-price{color:var(--muted);font-size:.6rem}
-
-/* SECTION HEAD */
 .section-head{padding:.65rem 1.2rem .4rem;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .section-count{color:var(--gold);font-size:.68rem}
-
-/* RELEASE CARDS */
 .release-card{border-bottom:1px solid var(--border);padding:.85rem 1.2rem;display:grid;grid-template-columns:50px 1fr auto;gap:.75rem;align-items:start;transition:background .12s;position:relative}
 .release-card.in-collection{background:var(--green-bg)}
 .release-card.in-collection::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green)}
@@ -102,8 +93,6 @@ main{flex:1;overflow-y:auto;padding-bottom:4rem}
 .btn-act:hover{border-color:var(--gold);color:var(--gold)}
 .btn-want-add{color:var(--gold-dim);border-color:var(--gold-dim)}
 .btn-want-add:hover,.btn-want-add.active{background:var(--gold);color:var(--groove);border-color:var(--gold)}
-
-/* SETTINGS */
 #settings-panel{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);align-items:flex-end}
 #settings-panel.open{display:flex}
 .settings-sheet{background:var(--surface);border-top:1px solid var(--border);padding:1.5rem 1.2rem 2.5rem;width:100%;border-radius:6px 6px 0 0}
@@ -116,11 +105,8 @@ main{flex:1;overflow-y:auto;padding-bottom:4rem}
 .btn-secondary{background:none;border:1px solid var(--border);color:var(--muted);border-radius:3px;padding:.68rem 1rem;font-family:inherit;font-size:.8rem;cursor:pointer}
 .s-note{font-size:.65rem;color:var(--muted);line-height:1.65;margin-top:.8rem}
 .s-note a{color:var(--gold-dim);text-decoration:none}
-
-/* TOAST */
 #toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:.76rem;padding:.45rem .9rem;border-radius:4px;z-index:300;transition:transform .22s;white-space:nowrap;pointer-events:none}
 #toast.show{transform:translateX(-50%) translateY(0)}
-
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-thumb{background:var(--border)}
 </style>
@@ -149,6 +135,12 @@ main{flex:1;overflow-y:auto;padding-bottom:4rem}
     <div class="load-artist" id="load-artist"></div>
     <div class="spinner"></div>
     <div class="load-step" id="load-step">Searching Discogs…</div>
+  </div>
+
+  <div class="state" id="state-choose">
+    <div class="idle-title" style="margin-bottom:.4rem">Multiple results found</div>
+    <div class="idle-sub" style="margin-bottom:.2rem">Which one do you mean?</div>
+    <div class="master-choices" id="master-choices"></div>
   </div>
 
   <div class="state" id="state-error">
@@ -190,7 +182,7 @@ main{flex:1;overflow-y:auto;padding-bottom:4rem}
     </div>
     <div class="s-note">
       Get your PAT at <a href="https://www.discogs.com/settings/developers" target="_blank">discogs.com/settings/developers</a>.<br>
-      Stored locally on this device. Never sent anywhere except Discogs API.
+      Stored locally on this device only. Never sent anywhere except Discogs API.
     </div>
   </div>
 </div>
@@ -206,6 +198,11 @@ const store = {
   set user(v) { localStorage.setItem('vid_user', v) },
 };
 
+// ── SERVICE WORKER ───────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/VinylDB/sw.js').catch(() => {});
+}
+
 // ── TOAST ───────────────────────────────────────────────────────
 let toastTimer;
 function toast(msg, ms=2400) {
@@ -217,7 +214,7 @@ function toast(msg, ms=2400) {
 
 // ── STATES ──────────────────────────────────────────────────────
 function showState(name) {
-  ['idle','loading','error'].forEach(s =>
+  ['idle','loading','choose','error'].forEach(s =>
     document.getElementById('state-'+s).classList.toggle('active', s===name));
   document.getElementById('state-results').style.display = name==='results' ? 'block' : 'none';
 }
@@ -255,7 +252,7 @@ async function dget(url) {
   return r.json();
 }
 
-async function findMaster(artist, track, query) {
+async function findMasters(artist, track, query) {
   const q = query || `${artist||''} ${track||''}`.trim();
   const d = await dget(`https://api.discogs.com/database/search?q=${encodeURIComponent(q)}&type=master&per_page=8`);
   return (d.results||[]).filter(r => r.master_id);
@@ -273,12 +270,10 @@ async function getVersions(masterId) {
 }
 
 async function cheapestListing(releaseId) {
-  // Try NL ships_from first
   try {
     const d = await dget(`https://api.discogs.com/marketplace/listings?release_id=${releaseId}&status=For+Sale&sort=price&sort_order=asc&ships_from=Netherlands&per_page=3`);
     if (d.listings?.length) return parseListing(d.listings[0]);
   } catch(e){}
-  // Fallback: all sellers, pick best total
   try {
     const d = await dget(`https://api.discogs.com/marketplace/listings?release_id=${releaseId}&status=For+Sale&sort=price&sort_order=asc&per_page=10`);
     if (!d.listings?.length) return null;
@@ -298,27 +293,22 @@ function parseListing(l) {
   const cur = l.price?.currency||'EUR';
   const s = l.shipping_price?.value||l.shipping_price||0;
   const ship = typeof s==='number'?s:0;
-  return {
-    id: l.id, price:p, ship, total:p+ship, currency:cur,
-    seller: l.seller?.username||'?',
-    condition: l.condition||'',
-    url: `https://www.discogs.com/sell/item/${l.id}`,
-  };
+  return { id:l.id, price:p, ship, total:p+ship, currency:cur,
+    seller:l.seller?.username||'?', condition:l.condition||'',
+    url:`https://www.discogs.com/sell/item/${l.id}` };
 }
 
 async function getIds(type) {
-  // type: 'collection' or 'wants'
   if (!store.user||!store.pat) return new Set();
-  const endpoint = type==='collection'
+  const ep = type==='collection'
     ? `https://api.discogs.com/users/${store.user}/collection/folders/0/releases`
     : `https://api.discogs.com/users/${store.user}/wants`;
   const key = type==='collection' ? 'releases' : 'wants';
-  const field = type==='collection' ? 'id' : 'id';
   try {
     let page=1, ids=new Set();
     for(;;) {
-      const d = await dget(`${endpoint}?per_page=100&page=${page}`);
-      (d[key]||[]).forEach(r => ids.add(type==='collection'?r.id:r.id));
+      const d = await dget(`${ep}?per_page=100&page=${page}`);
+      (d[key]||[]).forEach(r => ids.add(r.id));
       if (page>=(d.pagination?.pages||1)||ids.size>3000) break;
       page++;
     }
@@ -343,7 +333,6 @@ function parseShared(text, title, url) {
   return { query: raw||url||'' };
 }
 
-// ── FORMAT CURRENCY ──────────────────────────────────────────────
 function cur(v, c='EUR') {
   if (v==null||isNaN(v)) return '—';
   return new Intl.NumberFormat('nl-NL',{style:'currency',currency:c,maximumFractionDigits:2}).format(v);
@@ -373,9 +362,7 @@ function renderBundle(sellerMap) {
   const scroll = document.getElementById('bundle-sellers');
   scroll.innerHTML = '';
   const sellers = Object.entries(sellerMap)
-    .filter(([,v])=>v.count>1)
-    .sort((a,b)=>b[1].count-a[1].count)
-    .slice(0,15);
+    .filter(([,v])=>v.count>1).sort((a,b)=>b[1].count-a[1].count).slice(0,15);
   if (!sellers.length) { bar.classList.remove('visible'); return; }
   sellers.forEach(([name,d]) => {
     const c = document.createElement('div');
@@ -390,49 +377,27 @@ function renderBundle(sellerMap) {
 function renderReleases(versions, col, want, listings) {
   const container = document.getElementById('releases-list');
   container.innerHTML = '';
-
-  // Sort: collection first, then has listing (by total price), then no listing
   versions.sort((a,b) => {
     const ac=col.has(a.id)?0:1, bc=col.has(b.id)?0:1;
     if (ac!==bc) return ac-bc;
-    const ap=listings[a.id]?.total??Infinity, bp=listings[b.id]?.total??Infinity;
-    return ap-bp;
+    return (listings[a.id]?.total??Infinity)-(listings[b.id]?.total??Infinity);
   });
-
   versions.forEach(v => {
-    const inCol  = col.has(v.id);
-    const inWant = want.has(v.id);
-    const lst    = listings[v.id];
-
+    const inCol=col.has(v.id), inWant=want.has(v.id), lst=listings[v.id];
     const card = document.createElement('div');
     card.className = 'release-card'+(inCol?' in-collection':'');
-
     const thumbHtml = v.thumb
       ? `<img class="release-thumb" src="${v.thumb}" alt="" loading="lazy"/>`
       : `<div class="thumb-placeholder">💿</div>`;
-
     const meta = [v.label?.[0], v.country, v.released||v.year].filter(Boolean).join(' · ');
-
     let badges = `<span class="badge badge-fmt">${v.format||'LP'}</span>`;
     if (inCol)  badges += `<span class="badge badge-col">✓ In collection</span>`;
     if (inWant) badges += `<span class="badge badge-want">♥ Wantlist</span>`;
-
-    let priceHtml;
-    if (lst) {
-      priceHtml = `<div class="price-total">${cur(lst.total,lst.currency)}</div>
-        <span class="price-detail">${cur(lst.price,lst.currency)} + ${cur(lst.ship,lst.currency)} ship</span>
-        <div class="price-cond">${lst.condition}</div>`;
-    } else {
-      priceHtml = `<div class="price-na">No listings</div>`;
-    }
-
-    const listingsBtn = lst
-      ? `<button class="btn-act btn-listings" data-url="https://www.discogs.com/sell/release/${v.id}?ships_from=Netherlands">Listings</button>`
-      : '';
-    const wantBtn = !inCol
-      ? `<button class="btn-act btn-want-add${inWant?' active':''}" data-id="${v.id}">♥</button>`
-      : '';
-
+    const priceHtml = lst
+      ? `<div class="price-total">${cur(lst.total,lst.currency)}</div><span class="price-detail">${cur(lst.price,lst.currency)} + ${cur(lst.ship,lst.currency)} ship</span><div class="price-cond">${lst.condition}</div>`
+      : `<div class="price-na">No listings</div>`;
+    const listingsBtn = lst ? `<button class="btn-act btn-listings" data-url="https://www.discogs.com/sell/release/${v.id}?ships_from=Netherlands">Listings</button>` : '';
+    const wantBtn = !inCol ? `<button class="btn-act btn-want-add${inWant?' active':''}" data-id="${v.id}">♥</button>` : '';
     card.innerHTML = `${thumbHtml}
       <div class="release-body">
         <div class="release-title">${v.title||'Unknown'}</div>
@@ -443,88 +408,90 @@ function renderReleases(versions, col, want, listings) {
         <div class="release-price">${priceHtml}</div>
         <div class="release-actions">${listingsBtn}${wantBtn}</div>
       </div>`;
-
     card.querySelector('.btn-listings')?.addEventListener('click', e =>
       window.open(e.currentTarget.dataset.url,'_blank'));
-
     const wb = card.querySelector('.btn-want-add');
     if (wb) wb.addEventListener('click', async e => {
-      const btn = e.currentTarget;
-      btn.disabled = true;
+      const btn=e.currentTarget; btn.disabled=true;
       const ok = await putWantlist(parseInt(btn.dataset.id));
       if (ok) {
-        btn.classList.add('active');
-        want.add(parseInt(btn.dataset.id));
+        btn.classList.add('active'); want.add(parseInt(btn.dataset.id));
         toast('Added to wantlist ♥');
-        // Update badge
-        const bdg = btn.closest('.release-card').querySelector('.release-badges');
+        const bdg=btn.closest('.release-card').querySelector('.release-badges');
         if (!bdg.querySelector('.badge-want')) {
           const s=document.createElement('span');s.className='badge badge-want';s.textContent='♥ Wantlist';bdg.appendChild(s);
         }
       } else { toast('Failed — check settings'); }
-      btn.disabled = false;
+      btn.disabled=false;
     });
-
     container.appendChild(card);
   });
+}
+
+// ── LOAD MASTER ──────────────────────────────────────────────────
+async function loadMaster(masterId, rawQ) {
+  const step = s => document.getElementById('load-step').textContent = s;
+  step('Loading vinyl releases…');
+  const [masterData, versions] = await Promise.all([
+    dget(`https://api.discogs.com/masters/${masterId}`),
+    getVersions(masterId),
+  ]);
+  if (!versions.length) throw new Error('No vinyl releases found for this master.');
+  step('Checking your collection & wantlist…');
+  const [col, want] = await Promise.all([getIds('collection'), getIds('wants')]);
+  step('Fetching marketplace prices…');
+  const toFetch = versions.slice(0,25);
+  const listings = {};
+  await Promise.all(toFetch.map(async v => {
+    const l = await cheapestListing(v.id);
+    if (l) listings[v.id] = l;
+  }));
+  const sellerMap = {};
+  Object.entries(listings).forEach(([rid,l]) => {
+    if (!want.has(parseInt(rid))) return;
+    if (!sellerMap[l.seller]) sellerMap[l.seller]={count:0,minTotal:Infinity,currency:l.currency};
+    sellerMap[l.seller].count++;
+    if (l.total<sellerMap[l.seller].minTotal) { sellerMap[l.seller].minTotal=l.total; sellerMap[l.seller].currency=l.currency; }
+  });
+  showState('results');
+  renderMaster(masterData, versions);
+  renderBundle(sellerMap);
+  renderReleases(versions, col, want, listings);
 }
 
 // ── MAIN ─────────────────────────────────────────────────────────
 async function run(text, title, url) {
   if (!text&&!title&&!url) { showState('idle'); return; }
-
   const p = parseShared(text, title, url);
   document.getElementById('load-track').textContent = p.track||p.query||'';
   document.getElementById('load-artist').textContent = p.artist||'';
   showState('loading');
-
-  const step = s => document.getElementById('load-step').textContent = s;
   const rawQ = p.query||`${p.artist||''} ${p.track||''}`.trim();
-
   try {
-    step('Searching masters…');
-    const masters = await findMaster(p.artist, p.track, p.query);
+    document.getElementById('load-step').textContent = 'Searching masters…';
+    const masters = await findMasters(p.artist, p.track, p.query);
     if (!masters.length) throw new Error('No masters found. Try different search terms.');
 
-    const masterId = masters[0].master_id;
-    step('Loading vinyl releases…');
-    const [masterData, versions] = await Promise.all([
-      dget(`https://api.discogs.com/masters/${masterId}`),
-      getVersions(masterId),
-    ]);
-    if (!versions.length) throw new Error('No vinyl releases found for this master.');
-
-    step('Checking your collection & wantlist…');
-    const [col, want] = await Promise.all([
-      getIds('collection'),
-      getIds('wants'),
-    ]);
-
-    step('Fetching marketplace prices…');
-    const toFetch = versions.slice(0, 25);
-    const listings = {};
-    await Promise.all(toFetch.map(async v => {
-      const l = await cheapestListing(v.id);
-      if (l) listings[v.id] = l;
-    }));
-
-    // Seller bundle map (wantlist items only)
-    const sellerMap = {};
-    Object.entries(listings).forEach(([rid, l]) => {
-      if (!want.has(parseInt(rid))) return;
-      if (!sellerMap[l.seller]) sellerMap[l.seller]={count:0,minTotal:Infinity,currency:l.currency};
-      sellerMap[l.seller].count++;
-      if (l.total < sellerMap[l.seller].minTotal) {
-        sellerMap[l.seller].minTotal = l.total;
-        sellerMap[l.seller].currency = l.currency;
-      }
-    });
-
-    showState('results');
-    renderMaster(masterData, versions);
-    renderBundle(sellerMap);
-    renderReleases(versions, col, want, listings);
-
+    if (masters.length === 1) {
+      await loadMaster(masters[0].master_id, rawQ);
+    } else {
+      // Show chooser
+      const list = document.getElementById('master-choices');
+      list.innerHTML = '';
+      masters.slice(0,6).forEach(m => {
+        const btn = document.createElement('div');
+        btn.className = 'master-choice';
+        btn.innerHTML = `<span class="mc-title">${m.title||'Unknown'}</span><span class="mc-meta">${m.year||'?'} · ${m.label?.[0]||'?'} · ${m.country||'?'}</span>`;
+        btn.onclick = async () => {
+          showState('loading');
+          document.getElementById('load-track').textContent = m.title||'';
+          document.getElementById('load-artist').textContent = '';
+          await loadMaster(m.master_id, rawQ);
+        };
+        list.appendChild(btn);
+      });
+      showState('choose');
+    }
   } catch(err) {
     document.getElementById('error-text').textContent = err.message;
     document.getElementById('btn-manual').onclick = () =>
@@ -532,19 +499,13 @@ async function run(text, title, url) {
     showState('error');
   }
 }
-  
+
 // ── INIT ─────────────────────────────────────────────────────────
 (function() {
   const p = new URLSearchParams(window.location.search);
-  const text  = p.get('text') ||'';
-  const title = p.get('title')||'';
-  const url   = p.get('url')  ||'';
+  const text=p.get('text')||'', title=p.get('title')||'', url=p.get('url')||'';
   if (text||title||url) run(text,title,url); else showState('idle');
 })();
 </script>
-<script>
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/VinylDB/sw.js');
-}
-</script></body>
+</body>
 </html>

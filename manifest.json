@@ -1,7 +1,7 @@
 {
   "name": "VinylID",
   "short_name": "VinylID",
-  "description": "Deel een nummer en open direct de vinyl releases op Discogs",
+  "description": "Share a track and find all vinyl releases on Discogs",
   "start_url": "/VinylDB/",
   "scope": "/VinylDB/",
   "display": "standalone",
@@ -9,8 +9,14 @@
   "theme_color": "#111008",
   "icons": [
     {
-      "src": "https://mauricevandooren-coder.github.io/VinylDB/icon-192.png",
+      "src": "/VinylDB/icon-192.png",
       "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/VinylDB/icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
