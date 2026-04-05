@@ -542,5 +542,9 @@ async function run(text, title, url) {
   if (text||title||url) run(text,title,url); else showState('idle');
 })();
 </script>
-</body>
+<script>
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/VinylDB/sw.js');
+}
+</script></body>
 </html>
