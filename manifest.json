@@ -2,26 +2,21 @@
   "name": "VinylID",
   "short_name": "VinylID",
   "description": "Deel een nummer en open direct de vinyl releases op Discogs",
-  "start_url": "/",
+  "start_url": "/VinylDB/",
+  "scope": "/VinylDB/",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "background_color": "#111008",
+  "theme_color": "#111008",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "https://mauricevandooren-coder.github.io/VinylDB/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
   "share_target": {
-    "action": "/",
+    "action": "/VinylDB/",
     "method": "GET",
     "params": {
       "title": "title",
